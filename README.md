@@ -1,4 +1,7 @@
-# api documentation for  [nodepdf (v1.3.2)](https://github.com/TJkrusinski/NodePDF)  [![npm package](https://img.shields.io/npm/v/npmdoc-nodepdf.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-nodepdf) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-nodepdf.svg)](https://travis-ci.org/npmdoc/node-npmdoc-nodepdf)
+# npmdoc-nodepdf
+
+#### basic api documentation for  [nodepdf (v1.3.2)](https://github.com/TJkrusinski/NodePDF)  [![npm package](https://img.shields.io/npm/v/npmdoc-nodepdf.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-nodepdf) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-nodepdf.svg)](https://travis-ci.org/npmdoc/node-npmdoc-nodepdf)
+
 #### Down and dirty PDF rendering in Node.js
 
 [![NPM](https://nodei.co/npm/nodepdf.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/nodepdf)
@@ -67,7 +70,8 @@
     "scripts": {
         "test": "mocha tests"
     },
-    "version": "1.3.2"
+    "version": "1.3.2",
+    "bin": {}
 }
 ```
 
