@@ -74,15 +74,6 @@
 
         <li>
 
-            <a class="apidocElementLiA" href="#apidoc.element.nodepdf.toString">
-            function <span class="apidocSignatureSpan">nodepdf.</span>toString
-            <span class="apidocSignatureSpan">()</span>
-            </a>
-
-        </li>
-
-        <li>
-
             <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">nodepdf.</span>child</span>
 
         </li>
@@ -105,32 +96,6 @@
             <a class="apidocElementLiA" href="#apidoc.element.nodepdf.child.supports">
             function <span class="apidocSignatureSpan">nodepdf.child.</span>supports
             <span class="apidocSignatureSpan">(cb, cmd)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.nodepdf.render">module nodepdf.render</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.nodepdf.render.render">
-            function <span class="apidocSignatureSpan">nodepdf.</span>render
-            <span class="apidocSignatureSpan">(address, file, options, callback)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.nodepdf.toString">module nodepdf.toString</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.nodepdf.toString.toString">
-            function <span class="apidocSignatureSpan">nodepdf.</span>toString
-            <span class="apidocSignatureSpan">()</span>
             </a>
 
         </li>
@@ -226,32 +191,6 @@ NodePDF.render('http://www.google.com', 'google.pdf', function(err, filePath){
 
 
 
-    <h2>
-        <a href="#apidoc.element.nodepdf.toString" id="apidoc.element.nodepdf.toString">
-        function <span class="apidocSignatureSpan">nodepdf.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">toString = function () {
-    return text;
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-
-/**
- *  Check to see if the environment has a command
- */
-
-exports.supports = function(cb, cmd) {
-  var stream = child.exec(which+' '+(cmd || 'phantomjs'), function(err, stdo, stde){
-    return cb(!!stdo.<span class="apidocCodeKeywordSpan">toString</span>());
-  });
-};
-...</pre></li>
-    </ul>
-
-
-
 
 </div>
 
@@ -296,21 +235,21 @@ exports.supports = function(cb, cmd) {
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
- *  Run the process
- *
- *  @method run
- */
+  ]));
 
-Pdf.prototype.run = function() {
-  var self = this;
-  child.<span class="apidocCodeKeywordSpan">exec</span>(this.url, this.fileName, this.options, function (ps) {
-    ps.on('exit', function(c, d){
-if (c != 0) return self.emit('error', 'PDF conversion failed with exit of '+c);
+  fs.writeFile(optsFile, 'module.exports='+JSON.stringify(options), 'UTF-8', function(err) {
+if(err) {
+  return console.log(err);
+}
 
-var targetFilePath = self.fileName;
+var c = child.<span class="apidocCodeKeywordSpan">exec</span>(stdin.join(' '));
+c.on('exit', function () {
+  fs.unlinkSync(optsFile);
+});
 
-if (targetFilePath[0] != '/') {
-  targetFilePath = self.filePath + '/' + targetFilePath;
+c.on('error', function () {
+  fs.unlinkSync(optsFile);
+});
 ...</pre></li>
     </ul>
 
@@ -342,96 +281,6 @@ if (targetFilePath[0] != '/') {
   });
 
   return this;
-};
-...</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.nodepdf.render" id="apidoc.module.nodepdf.render">module nodepdf.render</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.nodepdf.render.render" id="apidoc.element.nodepdf.render.render">
-        function <span class="apidocSignatureSpan">nodepdf.</span>render
-        <span class="apidocSignatureSpan">(address, file, options, callback)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">render = function (address, file, options, callback) {
-  var filePath = process.env.PWD || process.cwd() || __dirname;
-
-  if (typeof options == 'function') {
-    callback = options;
-    options = defaults;
-  };
-
-  options = merge(defaults, options);
-
-  child.supports(function(support){
-    if (!support) callback(new Error('PhantomJS not installed'));
-
-    child.exec(address, file, options, function (ps) {
-      ps.on('exit', function(c, d){
-        if (c) return callback(new Error('Conversion failed with exit of '+c));
-
-        var targetFilePath = file;
-
-        if (targetFilePath[0] != '/')
-          targetFilePath = filePath + '/' + targetFilePath;
-
-        return callback(null, targetFilePath);
-      });
-    });
-  });
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-
-The callback API follows node standard callback signatures using the `render()` method.
-
-```` javascript
-var NodePDF = require('nodepdf');
-
-// options is optional, sets the width and height for the viewport to render the pdf from. (see additional options)
-NodePDF.<span class="apidocCodeKeywordSpan">render</span>('http://www.google.com', 'google.pdf', options, function
-(err, filePath){
-	// handle error and filepath
-});
-
-// use default options
-NodePDF.render('http://www.google.com', 'google.pdf', function(err, filePath){
-	// handle error and filepath
-});
-...</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.nodepdf.toString" id="apidoc.module.nodepdf.toString">module nodepdf.toString</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.nodepdf.toString.toString" id="apidoc.element.nodepdf.toString.toString">
-        function <span class="apidocSignatureSpan">nodepdf.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
-    <li>example usage<pre class="apidocCodePre">...
-
-/**
- *  Check to see if the environment has a command
- */
-
-exports.supports = function(cb, cmd) {
-  var stream = child.exec(which+' '+(cmd || 'phantomjs'), function(err, stdo, stde){
-    return cb(!!stdo.<span class="apidocCodeKeywordSpan">toString</span>());
-  });
 };
 ...</pre></li>
     </ul>
